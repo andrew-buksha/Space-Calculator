@@ -35,7 +35,6 @@ class ViewController: UIViewController {
     
     @IBAction func numberPressed(btn: UIButton!) {
         playSound()
-
         runningNumber += "\(btn.tag)"
         outputLbl.text = runningNumber
     }
@@ -76,15 +75,29 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onClearBtnPressed(sender: AnyObject) {
-        
+        playSound()
+        if outputLbl.text != ""{
+            clearTxt()
+            runningNumber = "0"
+            result = ""
+            leftValStr = ""
+            rightValStr = ""
+        } else if outputLbl.text != "" && leftValStr != "" && currentOperation != Operation.Empty {
+            clearTxt()
+            leftValStr = ""
+            currentOperation = Operation.Empty
+            result = "0"
+        } else if outputLbl.text != "" && rightValStr != "" {
+            clearTxt()
+            rightValStr = ""
+        }
     }
     
     func processOperation(op: Operation) {
         playSound()
-        
-        if currentOperation != Operation.Empty {
+        if currentOperation != Operation.Empty{
             
-            if runningNumber != "" {
+            if numberHasBeenPressed() {
             rightValStr = runningNumber
             runningNumber = ""
             
@@ -100,6 +113,7 @@ class ViewController: UIViewController {
             
             leftValStr = result
             deletezero()
+                
             }
             currentOperation = op
             
@@ -109,6 +123,21 @@ class ViewController: UIViewController {
             runningNumber = ""
             currentOperation = op
             
+        }
+        
+        
+    }
+    
+    func clearTxt() {
+        outputLbl.text = "0"
+    }
+    
+    
+    func numberHasBeenPressed() -> Bool {
+        if runningNumber != "" {
+            return true
+        } else {
+            return false
         }
     }
     
@@ -121,6 +150,9 @@ class ViewController: UIViewController {
         } else {
             outputLbl.text = result
         }
+            
+        
+        
     }
     
     func playSound() {
