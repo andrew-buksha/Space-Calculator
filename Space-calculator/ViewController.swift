@@ -28,6 +28,8 @@ class ViewController: UIViewController {
     var rightValStr = ""
     var currentOperation: Operation = Operation.Empty
     var result = ""
+    var nozero: Int = 0
+    var resultD: Double = 0
     
     
     
@@ -73,6 +75,10 @@ class ViewController: UIViewController {
         processOperation(Operation.Equals)
     }
     
+    @IBAction func onClearBtnPressed(sender: AnyObject) {
+        
+    }
+    
     func processOperation(op: Operation) {
         playSound()
         
@@ -93,7 +99,7 @@ class ViewController: UIViewController {
             }
             
             leftValStr = result
-            outputLbl.text = result
+            deletezero()
             }
             currentOperation = op
             
@@ -103,6 +109,17 @@ class ViewController: UIViewController {
             runningNumber = ""
             currentOperation = op
             
+        }
+    }
+    
+    func deletezero() {
+        resultD = Double(result)!
+        if resultD % 1 == 0 {
+            nozero = Int(resultD)
+            result = String(nozero)
+            outputLbl.text = result
+        } else {
+            outputLbl.text = result
         }
     }
     
