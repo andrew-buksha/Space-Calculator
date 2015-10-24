@@ -16,7 +16,6 @@ class ViewController: UIViewController {
         case Multiply = "*"
         case Subtract = "-"
         case Add = "+"
-        case Equals = "="
         case Empty = "Empty"
     }
     
@@ -71,31 +70,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onEqualPressed(sender: AnyObject) {
-        processOperation(Operation.Equals)
+        processOperation(currentOperation)
     }
     
     @IBAction func onClearBtnPressed(sender: AnyObject) {
         playSound()
-        if outputLbl.text != ""{
+        if outputLbl.text != "" {
             clearTxt()
-            runningNumber = "0"
+            runningNumber = ""
             result = ""
             leftValStr = ""
-            rightValStr = ""
-        } else if outputLbl.text != "" && leftValStr != "" && currentOperation != Operation.Empty {
-            clearTxt()
-            leftValStr = ""
-            currentOperation = Operation.Empty
-            result = "0"
-        } else if outputLbl.text != "" && rightValStr != "" {
-            clearTxt()
             rightValStr = ""
         }
     }
     
     func processOperation(op: Operation) {
         playSound()
-        if currentOperation != Operation.Empty{
+        if currentOperation != Operation.Empty && leftValStr != "" {
             
             if numberHasBeenPressed() {
             rightValStr = runningNumber
